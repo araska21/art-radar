@@ -44,3 +44,11 @@
 - 수집된 데이터는 AWS RDS(MySQL)에 저장되어 빠르고 안정적으로 조회됩니다.
 
 <br>
+
+## 트러블 슈팅 (Technical Challenges)
+
+### Issue 1: CORS 및 배포 환경에서의 API 경로 문제
+- 문제: 로컬 개발 환경에서는 localhost:5000을 호출했으나, 배포 후 브라우저가 사용자 PC의 localhost를 참조하여 CONNECTION_REFUSED 에러 발생.
+- 해결:
+  1. React 빌드 결과물(dist)을 Node.js 서버의 정적 파일(express.static)로 통합하여 **단일 오리진(Single Origin)**으로 구성.
+  2. API 요청 주소를 절대 경로(http://...)가 아닌 상대 경로(/api/events)로 수정하여 배포 환경에 유연하게 대응함.
