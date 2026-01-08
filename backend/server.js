@@ -51,7 +51,7 @@ app.get('/api/events', async (req, res) => {
 });
 
 // API 외의 모든 요청은 React(index.html)로 보내라
-app.get('*', (req, res) => {
+app.get(/(.*)/, (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 })
 
