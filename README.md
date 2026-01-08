@@ -50,5 +50,10 @@
 ### Issue 1: CORS 및 배포 환경에서의 API 경로 문제
 - 문제: 로컬 개발 환경에서는 localhost:5000을 호출했으나, 배포 후 브라우저가 사용자 PC의 localhost를 참조하여 CONNECTION_REFUSED 에러 발생.
 - 해결:
-  1. React 빌드 결과물(dist)을 Node.js 서버의 정적 파일(express.static)로 통합하여 **단일 오리진(Single Origin)**으로 구성.
+  1. React 빌드 결과물(dist)을 Node.js 서버의 정적 파일(express.static)로 통합하여 **단일 오리진(Single Origin)** 으로 구성.
   2. API 요청 주소를 절대 경로(http://...)가 아닌 상대 경로(/api/events)로 수정하여 배포 환경에 유연하게 대응함.
+
+### Issue 2: 포트 포워딩 (80 -> 5000)
+- 문제: URL 뒤에 포트 번호(:5000)를 입력해야만 접속 가능한 불편함.
+- 해결: iptables를 사용하여 기본 HTTP 포트(80)로 들어오는 요청을 Node.js 서버 포트(5000)로 리다이렉트 처리.
+  - sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 5000
