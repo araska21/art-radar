@@ -28,8 +28,8 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 백엔드 주소 (포트 5000 확인!)
-        const res = await axios.get('http://localhost:5000/api/events');
+        // 백엔드 주소 
+        const res = await axios.get('/api/events');
         if (res.data.success) {
           setEvents(res.data.data);
         }

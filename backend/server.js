@@ -10,7 +10,7 @@ const PORT = 5000; // React(3000번)와 겹치지 않게 5000 사용
 // 1. 미들웨어 설정
 app.use(cors()); // 모든 도메인에서 요청 허용 (개발용)
 app.use(express.json());
-app.use(express.static(path.join(_-dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // 2. DB 연결 풀 생성
 const pool = mysql.createPool({
