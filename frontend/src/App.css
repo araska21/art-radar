@@ -1,0 +1,156 @@
+/* src/App.css */
+
+/* 전체 초기화 */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+/* 지도 컨테이너 */
+.map-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  touch-action: none;
+}
+
+/* 1. 내 위치 버튼 (플로팅 버튼 스타일) */
+.my-loc-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px; /* 오른쪽 위로 이동 */
+  z-index: 20;
+  background-color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.my-loc-btn:active { background-color: #f0f0f0; }
+
+/* 2. 하단 카테고리 (가로 스크롤) */
+.category-container {
+  position: absolute;
+  top: 70px; /* 위치 버튼 아래로 배치 (모바일에서 손가락 닿기 좋게) */
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+  padding: 10px 20px;
+  overflow-x: auto; /* 가로 스크롤 허용 */
+  white-space: nowrap; /* 줄바꿈 방지 */
+  /* 스크롤바 숨기기 */
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+  pointer-events: none;
+}
+.category-container::-webkit-scrollbar { display: none; /* Chrome, Safari */ }
+
+.category-btn {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0; /* 버튼 찌그러짐 방지 */
+  pointer-events: auto;
+}
+
+.category-btn.active {
+  background-color: #ff5722;
+  color: white;
+  border-color: #ff5722;
+}
+
+/* 3. 모달 (상세 정보창) */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: fadeIn 0.2s;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px; /* PC에서는 너무 크지 않게 */
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: relative;
+  animation: slideUp 0.3s;
+}
+
+/* 이미지 섹션 */
+.modal-img-box {
+  width: 100%;
+  height: 200px;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 텍스트 정보 */
+.modal-info { padding: 20px; }
+.modal-title { margin: 0 0 10px; font-size: 18px; font-weight: bold; color: #222; }
+.modal-badge { 
+  display: inline-block; background: #f0f0f0; color: #666; 
+  padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-bottom: 12px; 
+}
+.modal-text { margin: 5px 0; font-size: 14px; color: #555; }
+.modal-close {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(255,255,255,0.8);
+  border: none; border-radius: 50%; width: 30px; height: 30px;
+  font-size: 18px; line-height: 1; cursor: pointer;
+}
+.modal-link {
+  display: block; width: 100%; text-align: center;
+  background-color: #ff5722; color: white; text-decoration: none;
+  padding: 14px 0; border-radius: 12px; margin-top: 15px; font-weight: bold;
+}
+
+/* 애니메이션 효과 */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); } to { transform: translateY(0); } }
+
+/* 📱 모바일 전용 스타일 (화면 폭 600px 이하) */
+@media (max-width: 600px) {
+  /* 모달을 화면 아래에 붙는 '바텀 시트' 형태로 변경 */
+  .modal-overlay {
+    align-items: flex-end; /* 아래로 정렬 */
+    padding: 0;
+  }
+  .modal-content {
+    max-width: 100%;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    animation: slideUpBottom 0.3s;
+  }
+  @keyframes slideUpBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  
+  /* 버튼 크기 키우기 (터치하기 편하게) */
+  .category-btn { padding: 10px 18px; font-size: 14px; }
+  .my-loc-btn { padding: 12px 18px; }
+}
