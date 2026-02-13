@@ -123,6 +123,7 @@ jobs:
             echo \"DB_USER=$DB_USER\" >> .env
             echo \"DB_PASS=$DB_PASS\" >> .env
             echo \"DB_NAME=$DB_NAME\" >> .env
+            echo \"DB_PORT=${{ secrets.DB_PORT }}\" >> .env
             echo \"KOPIS_API_KEY=$KOPIS_API_KEY\" >> .env
 
             # (4) 백엔드 의존성 설치 + PM2 재기동
