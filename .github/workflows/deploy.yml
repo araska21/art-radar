@@ -29,11 +29,11 @@ jobs:
         with:
           node-version: "22"
           cache: "npm"
-          cache-dependency-path: backend/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
 
-      # (3) React 빌드 -> backend/dist 생성
-      - name: Build React (backend/dist)
-        working-directory: backend
+      # (3) React 빌드 -> frontend/dist 생성
+      - name: Build React (frontend/dist)
+        working-directory: frontend
         run: |
           npm ci
           npm run build
@@ -57,7 +57,7 @@ jobs:
           host: ${{ secrets.PUBLIC_HOST }}
           username: ${{ secrets.PUBLIC_USER }}
           key: ${{ secrets.PUBLIC_SSH_KEY }}
-          source: "backend/dist/**"
+          source: "frontend/dist/**"
           target: "/usr/share/nginx/html"
           strip_components: 2
 
