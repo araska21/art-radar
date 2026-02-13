@@ -90,6 +90,7 @@ jobs:
         host: ${{ secrets.PUBLIC_HOST }}
         username: ${{ secrets.PUBLIC_USER }}
         key: ${{ secrets.PUBLIC_SSH_KEY }}
+        envs: DB_HOST,DB_USER,DB_PASS,DB_NAME,KOPIS_API_KEY
         script: |
           set -e
 
@@ -104,7 +105,7 @@ jobs:
             # (2) 원하는 Node 버전 활성화
             nvm use --lts
 
-            # (3) 레포 동기화
+            # (3) 레포 동기화 및 .env 파일 생성
             REPO_URL=\"${{ secrets.REPO_URL }}\"
             APP_DIR=\"${{ secrets.PRIVATE_APP_DIR }}\"
 
@@ -116,6 +117,14 @@ jobs:
             git fetch --all
             git reset --hard origin/main
 
+            cd \"\$APP_DIR/backend\"
+            
+            echo \"DB_HOST=$DB_HOST\" > .env
+            echo \"DB_USER=$DB_USER\" >> .env
+            echo \"DB_PASS=$DB_PASS\" >> .env
+            echo \"DB_NAME=$DB_NAME\" >> .env
+            echo \"KOPIS_API_KEY=$KOPIS_API_KEY\" >> .env
+
             # (4) 백엔드 의존성 설치 + PM2 재기동
             cd \"\$APP_DIR/backend\"
             npm ci --omit=dev
@@ -125,4 +134,10 @@ jobs:
               || pm2 start server.js --name myproj-server
 
             pm2 save
-          '"     
+          '"
+      env:
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASS: ${{ secrets.DB_PASS }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        KOPIS_API_KEY: ${{ secrets.KOPIS_API_KEY }}     
