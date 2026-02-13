@@ -115,7 +115,7 @@ jobs:
             git reset --hard origin/main
 
             # (4) 백엔드 의존성 설치 + PM2 재기동
-            cd \"\$APP_DIR/server\"
+            cd \"\$APP_DIR/backend\"
             npm ci --omit=dev
 
             pm2 describe myproj-server >/dev/null 2>&1 \
