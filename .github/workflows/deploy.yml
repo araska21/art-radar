@@ -38,6 +38,8 @@ jobs:
           npm ci
           npm run build
           test -d dist
+        env:
+          VITE_KAKAO_APP_KEY: ${{ secrets.VITE_KAKAO_APP_KEY }}
 
       # (4-0) Public 서버에 dist 업로드 받을 폴더 생성
       - name: Ensure web root exists on Public
